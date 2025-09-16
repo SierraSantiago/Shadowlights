@@ -1,0 +1,31 @@
+# Archivos de bases de datos
+*.duckdb
+*.duckdb.wal
+
+# Datos de entrada/salida
+*.csv
+*.json
+*.parquet
+
+# Archivos de Jupyter
+.ipynb_checkpoints/
+*.ipynb~
+
+# Archivos temporales / cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.tmp
+*.log
+
+# Entornos virtuales
+.env
+.venv/
+env/
+venv/
+*.egg-info/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
