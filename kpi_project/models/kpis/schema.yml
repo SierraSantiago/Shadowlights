@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: base_ads
+    description: "Modelo base que contiene los datos crudos de ads importados desde el CSV."
+    columns:
+      - name: date
+        description: "Fecha de la campaña."
+      - name: platform
+        description: "Plataforma publicitaria (Meta, Google, etc)."
+      - name: account
+        description: "Cuenta de publicidad."
+      - name: campaign
+        description: "Nombre de la campaña."
+      - name: country
+        description: "País donde se muestra la campaña."
+      - name: device
+        description: "Dispositivo de la audiencia (Desktop, Mobile, etc)."
+      - name: spend
+        description: "Gasto total en la campaña."
+      - name: clicks
+        description: "Cantidad de clics recibidos."
+      - name: impressions
+        description: "Cantidad de impresiones mostradas."
+      - name: conversions
+        description: "Cantidad de conversiones obtenidas."
+      - name: load_date
+        description: "Fecha y hora en que se cargaron los datos."
+      - name: source_file_name
+        description: "Nombre del archivo de origen de los datos."
+      - name: record_id
+        description: "ID único del registro."
+
+  - name: cac
+    description: "Calcula el CAC (Customer Acquisition Cost) = spend / conversions."
+    columns:
+      - name: cac
+        description: "Customer Acquisition Cost (CAC) por registro."
+
+  - name: roas
+    description: "Calcula el ROAS (Return on Ad Spend) = revenue / spend, donde revenue = conversions * 100."
+    columns:
+      - name: revenue
+        description: "Revenue estimado de la campaña (conversions * 100)."
+      - name: roas
+        description: "Return on Ad Spend (ROAS) por registro."
+
+  - name: compare_last_30_days
+    description: |
+      Comparación de las métricas CAC y ROAS: muestra el valor promedio
+      en los últimos 30 días vs los 30 días previos, con delta absoluto
+      y delta en %.
+    columns:
+      - name: metric
+        description: "Nombre de la métrica. Valores esperados: 'CAC' o 'ROAS'."
+        tests:
+          - not_null
+          - unique
+          - accepted_values:
+              values: ["CAC", "ROAS"]
+
+      - name: last_30_value
+        description: >
+          Valor promedio de la métrica en los últimos 30 días (promedio de
+          los valores diarios provistos por los modelos `cac` y `roas`).
+      - name: prev_30_value
+        description: >
+          Valor promedio de la métrica en los 30 días inmediatamente anteriores
+          al periodo anterior (bloque de 30 días previo).
+      - name: delta_abs
+        description: "Diferencia absoluta: last_30_value - prev_30_value."
+      - name: delta_pct
+        description: >
+          Cambio porcentual relativo respecto al periodo previo.
+          Calculado como (last_30_value - prev_30_value) / prev_30_value * 100.
+    

@@ -1,31 +1,59 @@
-# Archivos de bases de datos
+# --- Bases de datos locales ---
 *.duckdb
 *.duckdb.wal
 
-# Datos de entrada/salida
+# --- Datos de entrada/salida ---
 *.csv
 *.json
 *.parquet
+*.xlsx
+*.ods
 
-# Archivos de Jupyter
+# --- Archivos de Jupyter ---
 .ipynb_checkpoints/
 *.ipynb~
+*.ipynb_meta.json
 
-# Archivos temporales / cache
+# --- Archivos temporales / cache ---
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 *.tmp
 *.log
+*.sqlite
+*.db
+.cache/
+.mypy_cache/
+.pytest_cache/
+coverage/
 
-# Entornos virtuales
+# --- Entornos virtuales ---
 .env
 .venv/
 env/
 venv/
 *.egg-info/
 
-# Archivos de sistema
+# --- Archivos de sistema ---
 .DS_Store
 Thumbs.db
+
+# --- dbt ---
+target/
+dbt_packages/
+logs/
+manifest.json
+run_results.json
+catalog.json
+
+# --- Poetry ---
+# lock y config sí se suben, pero cachés no
+poetry.toml
+poetry.lock
+# si usas pyproject.toml, ¡este sí va al repo!
+
+# --- n8n ---
+.n8n/
+n8n.sqlite
+n8n.sqlite-journal
