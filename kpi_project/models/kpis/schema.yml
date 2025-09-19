@@ -57,7 +57,8 @@ models:
           - not_null
           - unique
           - accepted_values:
-              values: ["CAC", "ROAS"]
+              arguments:
+                values: ["CAC", "ROAS"]
 
       - name: last_30_value
         description: >
@@ -73,4 +74,32 @@ models:
         description: >
           Cambio porcentual relativo respecto al periodo previo.
           Calculado como (last_30_value - prev_30_value) / prev_30_value * 100.
-    
+      
+  - name: compare_n_days
+    description: |
+      Compara las métricas CAC y ROAS en un rango de fechas definido por variables
+      (`start_date` y `end_date`) frente al periodo inmediatamente anterior de igual duración.
+      Calcula valores promedio, diferencias absolutas y diferencias porcentuales.
+    columns:
+      - name: metric
+        description: "Nombre de la métrica. Valores esperados: 'CAC' o 'ROAS'."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["CAC", "ROAS"]
+
+      - name: last_value
+        description: >
+          Valor promedio de la métrica en el rango definido entre `start_date` y `end_date`.
+
+      - name: prev_value
+        description: >
+          Valor promedio de la métrica en el periodo inmediatamente anterior de la misma duración.
+
+      - name: delta_abs
+        description: "Diferencia absoluta: last_value - prev_value."
+
+      - name: delta_pct
+        description: >
+          Cambio porcentual relativo respecto al periodo anterior.
+          Calculado como (last_value - prev_value) / prev_value * 100.
